@@ -172,17 +172,18 @@ class Classifier:
                     loss2 = torch.mean(loss2)
                     loss = (loss1 + loss2) / 2
                 else:
-                    claims = torch.sigmoid(claim_logits)
-                    pos = torch.sigmoid(pos_logits)
-                    # for logging purposes
-                    precedent = torch.cat((pos, claims), dim=1)
-
-                    loss1 = self.loss_fn(pos, pos_labels.float())
-                    loss1[b_claims == 0] = 0
-                    loss2 = self.loss_fn(claims, b_claims.float())
-                    loss1 = torch.mean(loss1)
-                    loss2 = torch.mean(loss2)
-                    loss = (loss1 + loss2) / 2
+                    print("Pretrain claim prediction model and positive outcome prediction model separately!")
+                    # claims = torch.sigmoid(claim_logits)
+                    # pos = torch.sigmoid(pos_logits)
+                    # # for logging purposes
+                    # precedent = torch.cat((pos, claims), dim=1)
+                    #
+                    # loss1 = self.loss_fn(pos, pos_labels.float())
+                    # loss1[b_claims == 0] = 0
+                    # loss2 = self.loss_fn(claims, b_claims.float())
+                    # loss1 = torch.mean(loss1)
+                    # loss2 = torch.mean(loss2)
+                    # loss = (loss1 + loss2) / 2
 
             elif self.architecture == "baseline_positive":
                 loss = self.loss_fn(logits, b_labels[:, :b_labels.size(1) // 2].float())
@@ -270,7 +271,7 @@ class Classifier:
             recall = recall_score(all_truths, all_preds, average="micro") * 100
         total_loss = total_loss / len(dataloader)
 
-        if self.architecture == 'baseline_negative' or self.architecture == 'baseline_positive' or self.architecture == 'claims':
+        if self.architecture == 'baseline_negative' or self.architecture == 'baseline_positive' or self.architecture == 'claims' or self.architecture == 'mtl':
             neg_accuracy = 0
             neg_f1 = 0
             neg_precision = 0
@@ -501,7 +502,7 @@ if __name__ == '__main__':
     parser.add_argument("--epochs", type=int, default=10, required=False)
     parser.add_argument("--model", type=str, default="bert", required=False)
     parser.add_argument("--dataset", type=str, default="precedent", required=False) # precedent, alleged
-    parser.add_argument("--architecture", type=str, default="mtl", required=False) # mtl baseline_positive baseline_negative claims claim_outcome joint_model
+    parser.add_argument("--architecture", type=str, default="mtl", required=False) # mtl baseline_positive baseline_negative claims claim_outcome joint_model claims
     parser.add_argument("--input", type=str, default="facts", required=False) # arguments
     parser.add_argument("--pos_path", type=str, default="results/precedent/baseline_positive/bert/facts/1cf14ebeb3164d268890c1e9a7cc929b/model.pt", required=False)
     parser.add_argument("--claim_path", type=str, default="results/precedent/claims/bert/facts/9dec8c4189e14db29363183d1704cdc8/model.pt", required=False)
