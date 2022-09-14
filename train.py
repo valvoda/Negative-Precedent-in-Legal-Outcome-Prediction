@@ -519,9 +519,9 @@ if __name__ == '__main__':
     else:
         print("Error: Unsupported Model")
 
-    if args.dataset == "alleged":
+    if args.dataset == "Chalkidis":
         output_dim = 17*2
-    elif args.dataset == "precedent":
+    elif args.dataset == "Outcome":
         output_dim = 14*2
     else:
         print("Error: Unsupported Dataset")
