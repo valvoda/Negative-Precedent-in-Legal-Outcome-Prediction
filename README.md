@@ -15,4 +15,5 @@ To train the Claim-Outcome model, first train a baseline_positive and claims mod
 Create a conda environment with the envirionment.yml file.
 
 ## Precedent Dataset
-Contact the authors for a link to the precedent dataset or use https://huggingface.co/datasets/ecthr_cases for the Chalkidis et. al. corpus.
+Outcome corpus: https://drive.google.com/file/d/1znbSf0vLJD-CxqpyzslxFw-vEe4qXOxw/view?usp=sharing
+Chalkidis et. al. corpus: https://drive.google.com/file/d/11ZvQf--QPb6Ut78YuNDq0sZNBVdI36by/view?usp=sharing
