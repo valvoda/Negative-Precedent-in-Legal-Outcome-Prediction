@@ -308,7 +308,7 @@ def text_preprocessing(text):
 
     return text
 
-def run():
+def outcome_preprocess():
     tokenizer = AutoTokenizer.from_pretrained("nlpaueb/legal-bert-base-uncased")
     get_data("ECHR/precedent/legal_bert", tokenizer, 512)
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
@@ -386,7 +386,7 @@ def simple_split(pretokenized_dir, tokenizer, max_len):
             [test_facts, test_masks, test_arguments, test_masks_arguments, test_ids, test_claims, test_outcomes, mlb],
             f, protocol=4)
 
-def simple_run():
+def chalkidis_preprocess():
     tokenizer = AutoTokenizer.from_pretrained("nlpaueb/legal-bert-base-uncased")
     simple_split("ECHR/alleged/legal_bert", tokenizer, 512)
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
@@ -396,5 +396,5 @@ def simple_run():
 
 
 if __name__ == '__main__':
-    simple_run()
-    run()
+    chalkidis_preprocess()
+    outcome_preprocess()
