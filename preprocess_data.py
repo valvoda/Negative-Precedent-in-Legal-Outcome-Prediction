@@ -75,9 +75,9 @@ def get_data(pretokenized_dir, tokenizer, max_len):
         all_outcomes = []
         all_ids = []
 
-        for item in tqdm(os.listdir("ECHR/precedent/"+case_path)):
+        for item in tqdm(os.listdir("ECHR/Outcome/"+case_path)):
             if item.endswith('.json'):
-                with open(os.path.join("ECHR/precedent/"+case_path, item), "r") as json_file:
+                with open(os.path.join("ECHR/Outcome/"+case_path, item), "r") as json_file:
                     data = json.load(json_file)
                     try:
                         alleged_arguments = data["text"].split("THE LAW")[1].split("FOR THESE REASONS, THE COURT UNANIMOUSLY")[0].lower()
@@ -102,7 +102,7 @@ def get_data(pretokenized_dir, tokenizer, max_len):
                     data['claim'] = claims
                     data['arguments'] = argument
 
-                with open(os.path.join('ECHR/precedent/'+out, item), "w") as out_file:
+                with open(os.path.join('ECHR/Outcome/'+out, item), "w") as out_file:
                     json.dump(data, out_file, indent=1)
 
                 if len(claims) > 0:
@@ -310,11 +310,11 @@ def text_preprocessing(text):
 
 def outcome_preprocess():
     tokenizer = AutoTokenizer.from_pretrained("nlpaueb/legal-bert-base-uncased")
-    get_data("ECHR/precedent/legal_bert", tokenizer, 512)
+    get_data("ECHR/Outcome/legal_bert", tokenizer, 512)
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
-    get_data("ECHR/precedent/bert", tokenizer, 512)
+    get_data("ECHR/Outcome/bert", tokenizer, 512)
     tokenizer = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096')
-    get_data("ECHR/precedent/longformer", tokenizer, 4096)
+    get_data("ECHR/Outcome/longformer", tokenizer, 4096)
 
 def get_allowed(arts):
     allowed = ['10', '11', '13', '14', '18', '2', '3', '4', '5', '6', '7', '8', '9', 'P1-1', 'P4-2', 'P7-1', 'P7-4']
@@ -344,9 +344,9 @@ def simple_data(path="dataset/dev.jsonl"):
     return all_facts, all_claims, all_outcomes, all_ids
 
 def simple_split(pretokenized_dir, tokenizer, max_len):
-    val_facts, val_claims, val_outcomes, val_ids = simple_data("ECHR/alleged/dev.jsonl")
-    test_facts, test_claims, test_outcomes, test_ids = simple_data("ECHR/alleged/test.jsonl")
-    train_facts, train_claims, train_outcomes, train_ids = simple_data("ECHR/alleged/train.jsonl")
+    val_facts, val_claims, val_outcomes, val_ids = simple_data("ECHR/Chalkidis/dev.jsonl")
+    test_facts, test_claims, test_outcomes, test_ids = simple_data("ECHR/Chalkidis/test.jsonl")
+    train_facts, train_claims, train_outcomes, train_ids = simple_data("ECHR/Chalkidis/train.jsonl")
 
     mlb = MultiLabelBinarizer()
     train_claims, train_outcomes = binarizer(train_claims, train_outcomes, mlb, True)
@@ -388,11 +388,11 @@ def simple_split(pretokenized_dir, tokenizer, max_len):
 
 def chalkidis_preprocess():
     tokenizer = AutoTokenizer.from_pretrained("nlpaueb/legal-bert-base-uncased")
-    simple_split("ECHR/alleged/legal_bert", tokenizer, 512)
+    simple_split("ECHR/Chalkidis/legal_bert", tokenizer, 512)
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
-    simple_split("ECHR/alleged/bert", tokenizer, 512)
+    simple_split("ECHR/Chalkidis/bert", tokenizer, 512)
     tokenizer = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096')
-    simple_split("ECHR/alleged/longformer", tokenizer, 4096)
+    simple_split("ECHR/Chalkidis/longformer", tokenizer, 4096)
 
 
 if __name__ == '__main__':
