@@ -15,5 +15,11 @@ To train the Claim-Outcome model, first train a baseline_positive and claims mod
 Create a conda environment with the envirionment.yml file.
 
 ## Outcome corpus
+
+To preprocess the datasets, first download from the links below:
 - Outcome corpus: https://drive.google.com/file/d/1znbSf0vLJD-CxqpyzslxFw-vEe4qXOxw/view?usp=sharing
 - Chalkidis et. al. corpus: https://drive.google.com/file/d/11ZvQf--QPb6Ut78YuNDq0sZNBVdI36by/view?usp=sharing
+Then, make a new 'ECHR' directory and copy the Outcome corpus files into a 'ECHR/Outcome' sub-directory.
+Similarily, copy the Chalkdis et al. files into a 'ECHR/Chalkidis' sub-directory.
+
+You can now run 'preprocess_data.py' to create the tokenized files.
